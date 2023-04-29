@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Körkiralyzoló program</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <style>
+            #kirajzoltKor
+            {
+                width:0px;
+                height: 0px;
+                border:2px solid magenta;
+                box-shadow:3px 3px 6px grey;
+                margin:0px auto;
+                display: none;
+                background-image: url("körkirály.jpg");
+                background-size: contain;
+            }
+
+        </style>
+</head>
+<body>
+
+    <label for="sugar">A kör sugara:</label>
+    <input type="number" id="sugar" class="form-control" value="100" min="1" max="1000">
+    <label for="piertek">A Pi állandó értéke:</label>
+    <input type="number" id="Pi" class="form-control" value="3.14">
+    <button id="kirajzoloGomb" class="form-contol btn bg-dark text-white mt-2">Kirajzol</button>
+    <!--számítások megjelenítése helye:-->
+    <p id="keruletEredmeny" class="text-center"></p>
+    <p id="teruletEredmeny" class="text-center"></p>
+    <!--kirajzolás helye:-->
+    <div id="kirajzoltKor"></div>
+   
+   <script>
+        
+        function korKerulet(sugar){
+            return 2*sugar*Math.PI;
+        }
+        function korTerulet(sugar){
+            return Math.PI*sugar*sugar;
+        }
+        function meretVizsgalo(vizsgaltErtek){
+            if(vizsgaltErtek<=0){
+                return false;
+            }
+            return true;
+        }
+        
+        //Kirajzolás folyamata
+        kirajzoloGomb.addEventListener("click", korKirajzolo);
+    
+        function korKirajzolo(){
+            let sugara=document.querySelector("#sugar").value;
+            let piErtek=document.querySelector("#Pi").innerHTML=Math.PI.value;
+            if(meretVizsgalo(sugara)==true)
+            {
+                let rajzolando=document.querySelector("#kirajzoltKor");
+                rajzolando.style.borderRadius=sugara+"px";
+                rajzolando.style.width=2*sugara+"px";
+                rajzolando.style.height=2*sugara+"px";
+                rajzolando.style.display="block";
+                document.querySelector("#keruletEredmeny").innerHTML="A kör kerülete:"+korKerulet(sugara, piErtek)+"px";
+                document.querySelector("#teruletEredmeny").innerHTML="A kör területe:"+korTerulet(sugara, piErtek)+"px <sup>2</sup>";
+            }
+            else{
+                alert("A bemeneti értékeknek nagyobbnak kell lennie mint 0!","Hiba");
+            }
+        }
+   </script>
+
+</body>
+</html>
